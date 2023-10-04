@@ -89,7 +89,8 @@ namespace TempLat {
             // 		model.fldCS0(i) and model.piCS0(i) are introduced in GeV,
             // 		so we transform them to program variables by dividing by f_* and f_* omega_* respectively.
             ForLoop(i,0,Model::NCs - 1,
-            	model.fldCS(i) += model.fldCS0(i) / model.fStar;
+		    model.fldCS(i) += model.fldCS0(i) / model.fStar;
+		    //model.fldCS(i)(0_c).inFourierSpace().setZeroMode(100);
             	model.piCS(i) +=  model.piCS0(i) / model.fStar / model.omegaStar;
             );
 
@@ -126,7 +127,8 @@ namespace TempLat {
 
 					// 4. Fluctuations for the complex field components, imposed as a sum of left-moving and right-moving waves in momentum space:
                     model.fldCS(i)(0_c).inFourierSpace() = a0 * (eitheta00 + eitheta01) / sqrt(2) / sqrt(2); // component 0. Second sqrt(2) comes from normalisation of complex scalar.
-                    model.fldCS(i)(0_c).inFourierSpace().setZeroMode(0);  // sets the zero mode to 0
+                    //model.fldCS(i)(0_c).inFourierSpace().setZeroMode(256.0*256.0*256.0*1.4);  // sets the zero mode to 0
+		    model.fldCS(i)(0_c).inFourierSpace().setZeroMode(0);  // sets the zero mode to 0
                     model.fldCS(i)(1_c).inFourierSpace() = a1 * (eitheta10 + eitheta11) / sqrt(2) / sqrt(2); // component 1
                     model.fldCS(i)(1_c).inFourierSpace().setZeroMode(0); // sets the zero mode to 0
 
@@ -139,9 +141,9 @@ namespace TempLat {
 
 
 					// --> ... and then set the fluctuations of the derivatives.
-                    model.piCS(i)(0_c).inFourierSpace() = - Constants::I<T> * omega0 * a0 * (eitheta00 - eitheta01) / sqrt(2) / sqrt(2)- aDot * model.fldCS(i)(0_c).inFourierSpace(); // component 0
+                    //model.piCS(i)(0_c).inFourierSpace() = - Constants::I<T> * omega0 * a0 * (eitheta00 - eitheta01) / sqrt(2) / sqrt(2)- aDot * model.fldCS(i)(0_c).inFourierSpace(); // component 0
                     model.piCS(i)(0_c).inFourierSpace().setZeroMode(0); // sets the zero mode to 0
-                    model.piCS(i)(1_c).inFourierSpace() = - Constants::I<T> * omega0 * a1 * (eitheta10 - eitheta11) / sqrt(2) / sqrt(2)  - aDot * model.fldCS(i)(1_c).inFourierSpace();  // component 1
+                    //model.piCS(i)(1_c).inFourierSpace() = - Constants::I<T> * omega0 * a1 * (eitheta10 - eitheta11) / sqrt(2) / sqrt(2)  - aDot * model.fldCS(i)(1_c).inFourierSpace();  // component 1
                     model.piCS(i)(1_c).inFourierSpace().setZeroMode(0); // sets the zero mode to 0
 
             );

@@ -43,16 +43,23 @@ namespace TempLat {
             // Fourier lattice site, see eq.(57) of arXiv:2006.15122v2
             auto k = ntilde.norm() * f.getKIR();
             // comoving momentum (in program units), obtained by multiplying it by k_IR
-            auto omega = omega_k(k,mass2, f.toString());
+	    
+            //auto omega = omega_k(k,mass2, f.toString());
+	    auto omega = exp( k * k / kCutOff / kCutOff) ;
+	    
             // mode frequency
-
             auto Hcut = heaviside(kCutOff - k);
             // function that sets to zero all modes over a certain cutoff
 
             // Returns the rms of the (real and imaginary) parts of the fluctuations
             // (see Sec. 7.1. of arXiv:2006.15122 for a derivation)
-            return  Hcut  * (model.omegaStar / model.fStar * pow(lSide / pow<2>(f.getDx()), 1.5)) * pow(2 * omega, -0.5)/sqrt(2);
-            //Here 1/sqrt{2omega_k} characterises rms of |phi_k|, but since |phi_k|^2 =
+	    //auto res = pow(omega, -0.5);
+
+	    //return  res;
+	    return  (pow(lSide / pow<2>(f.getDx()), 1.5)) * pow(omega, -0.5)/sqrt(2);
+            //return  Hcut  * (model.omegaStar / model.fStar * pow(lSide / pow<2>(f.getDx()), 1.5)) * pow(2 * omega, -0.5)/sqrt(2);
+
+	    //Here 1/sqrt{2omega_k} characterises rms of |phi_k|, but since |phi_k|^2 =
             // Re(phi_k)^2 + Im(phi_k)^2, hence there is extra 1/sqrt{2} as this 'return' is
             // in reality the rms of either Re(phi_k) or Im(phi_k).
         }
