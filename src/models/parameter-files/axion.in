@@ -1,0 +1,55 @@
+#Output
+outputfile = ./output/
+#Evolution
+expansion = true
+evolver = LF
+
+#Lattice
+# lambda0 = 82
+N = 256
+dt = 0.02   #dt=lSide/N*0.1
+#kIR = 0.05     #kIR=2pi/(Nx)
+lSide = 181
+LcOverL1 = 2
+TsOverT = 0.011
+baseSeed = 1
+#Times
+tOutputFreq = 0.02
+tOutputInfreq = 0.02
+tOutputRareFreq = 10
+t0 = 1  # \tau_i = 0.055 0.11 0.22
+tMax = 120
+
+
+fixedBackground = true
+omegaEoS = 0.333333333
+H0 = 2.9184e-11  #2.7e13   # sqrt(lambda0 / 0.11 * f_a**2)
+
+#GWs
+withGWs = false
+
+#IC
+kCutOff = 6
+initial_amplitudes = 0
+initial_momenta = 0
+cmplx_field_initial_norm =  0 #1e12
+
+cmplx_momentum_initial_norm = 0  #-6.88343e30 # homogeneous amplitudes in GeV2
+
+#Gauge couplings and effectiveCharges
+CSU1Charges = 0#1
+gU1s = 0#1.11037e-05
+
+#Model Parameters
+#lambda = 9e-14
+n = 0
+f_a = 1e12
+#energy_snapshot
+energy_snapshot = E_CS_G E_CS_K E_V
+    
+
+#hdf5 spectra
+hdf5Spectra = true
+spectraVerbosity = true
+
+
