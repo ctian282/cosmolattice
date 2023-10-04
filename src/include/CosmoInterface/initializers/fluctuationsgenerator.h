@@ -53,6 +53,7 @@ namespace TempLat {
 
             // Returns the rms of the (real and imaginary) parts of the fluctuations
             // (see Sec. 7.1. of arXiv:2006.15122 for a derivation)
+
 	    //auto res = pow(omega, -0.5);
 
 	    //return  res;
