@@ -1,8 +1,8 @@
 /* This file is part of CosmoLattice, available at www.cosmolattice.net .
    Copyright Daniel G. Figueroa, Adrien Florio, Francisco Torrenti and Wessel Valkenburg.
    Released under the MIT license, see LICENSE.md. */
-
 #include "TempLat/util/stringify.h"
+#include "CosmoInterface/cosmointerface.h"
 #include STRINGIFY(MODELINCLUDE)
 // YourModel.h was loaded during compilation through a variable called MODELINCLUDE in CMake,
 // see CMakeList.txt. Here STRINGIFY is just a macro that converts MODELINCLUDE into a string.
@@ -143,7 +143,9 @@ int main (int argc, char* argv[] ) {
         // We evolve the EoM by one time step dt. It needs the time variable in case we want to simulate
         // a fixed background metric.
         t += model.dt;
-
+	model.lambda = 1.0  / t / t;
+	model.q = model.q0 * pow(t, model.n) ;
+        //std::cout<<model.aDotI<<std::endl;
         if(runParams.boolBackup && (i % runParams.tBackupFreqInt == 0)) manager.backup(parser, model, t, runParams.backupPath);
         // If 'backing-up' is activated, here we create a back-up of the simulation
         // in case of a power shortage. Namely we back-up the simulation at the current time step
