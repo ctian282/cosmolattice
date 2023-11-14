@@ -144,7 +144,7 @@ int main (int argc, char* argv[] ) {
         // a fixed background metric.
         t += model.dt;
 	model.lambda = 1.0  / t / t;
-	model.q = model.q * pow(t, model.n) ;
+	model.q = model.q0 * pow(t, model.n) ;
         //std::cout<<model.aDotI<<std::endl;
         if(runParams.boolBackup && (i % runParams.tBackupFreqInt == 0)) manager.backup(parser, model, t, runParams.backupPath);
         // If 'backing-up' is activated, here we create a back-up of the simulation

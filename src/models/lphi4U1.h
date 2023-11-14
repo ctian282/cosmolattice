@@ -126,8 +126,8 @@ template<class R>
 	//lambda = lambda0 / (runPar.t0 * LcOverL1 / Lc)/ (runPar.t0 * LcOverL1 / Lc);
 
 	
-	q0 = pow(ma / omegaStar, 2) * pow(TsOverT,n ) ;
-	q = q0 * pow(tau_i, n);
+	q0 = pow(ma / omegaStar, 2) * pow(TsOverT,n ) * pow(tau_i, n);
+	q = q0;
 	
 	std::cout<<std::setprecision(9)<<omegaStar<<" "<<lambda<<" "<<" "<<tau_i<<" "<<q<<std::endl;
 	//omegaStar = parser.get<double>("omegaStar");//sqrt(lambda) * normCmplx0;
