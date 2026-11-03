@@ -1,0 +1,49 @@
+# Simultaneous vacuum-bubble benchmark: Table II, row 3 (Fig. 6, left).
+# All quantities are in units of M, with M = 1.
+
+# Output
+outputfile = ./
+print_headers = true
+overwriteFiles = false
+
+# Evolution
+expansion = false
+evolver = LF
+
+# Lattice
+# lSide is held fixed so that a smoke run can override N without changing the
+# physical box. At N=512 this gives dx = lSide/N = 0.44.
+N = 512
+lSide = 225.28
+dt = 0.088
+
+# Times and output cadence
+# 0.88 = 10 dt; 225.368 = 8 R* + dt, so t/R*=0, 0.46875, 1, 4, 8
+# are all sampled (the 0.46875 point is the nearest sample to 0.47).
+t0 = 0
+tOutputFreq = 0.88
+tOutputInfreq = 0.88
+tOutputRareFreq = 1000
+tOutputVerb = 0.88
+tMax = 225.368
+
+# Spectra
+PS_type = 1
+PS_version = 1
+saveUnbinnedSpectra = false
+
+# Scalar initial condition: the model supplies the bubble profile directly.
+ICtype_S = Homogeneous
+baseSeed = vacuum-bubbles
+
+# Simultaneous-nucleation model parameters
+delta = -1.632
+lambda = 0.5
+phi_b = 2.45
+Rc = 7.15
+l0 = 1.71
+Nb = 512
+bubble_seed = vacuum-bubbles-row3
+
+# No gravitational waves for the scalar-spectrum reproduction.
+withGWs = false

@@ -38,6 +38,49 @@ This will compile the ``lphi4`` model. To run it with the default input file, yo
 The above commands just represent a very brief guide for the installation and execution of CosmoLattice. 
 For further information, see the in-detail explanations on [the webpage](https://cosmolattice.net/Quick%20installation%20and%20execution.html).
 
+### Simultaneous vacuum-bubble benchmark
+
+The `vacuum_bubbles` model reproduces the simultaneous-nucleation scalar benchmark in Table II, row 3 and the left panel of Fig. 6 of arXiv:1802.05712. Build it by selecting the model at configure time:
+
+```bash
+cmake -S . -B build-vacuum -DMODEL=vacuum_bubbles
+cmake --build build-vacuum --target cosmolattice -j
+```
+
+The full-resolution preset is `models/parameter-files/vacuum_bubbles.in` and runs the `512^3` lattice. Its production values are `Rc M = 7.15`, `Nb = 512`, `N = 512`, `dx M = 0.44`, `dt M = 0.088`, `L dx M = 225.28`, `R* M = 28.16`, and `gamma* = R*/(2 Rc) = 1.96923`. Run it in a separate output directory, for example:
+
+```bash
+mkdir -p runs/vacuum-bubbles-row3
+build-vacuum/vacuum_bubbles \
+  input=models/parameter-files/vacuum_bubbles.in \
+  overwriteFiles=true \
+  outputfile=runs/vacuum-bubbles-row3/
+```
+
+For a quick initialization and spectrum smoke test, reduce only the lattice and bubble count (the fixed `lSide` keeps the placement geometry valid):
+
+```bash
+mkdir -p runs/vacuum-bubbles-smoke
+build-vacuum/vacuum_bubbles \
+  input=models/parameter-files/vacuum_bubbles.in \
+  N=32 bubble_Nb=8 tMax=1.76 \
+  overwriteFiles=true \
+  outputfile=runs/vacuum-bubbles-smoke/
+```
+
+The model seeds all centers from `bubble_seed`, enforces periodic minimum-image center separations greater than `2 Rc`, and writes the profile at `t=0` with `pi=0`. The scalar spectra are in `spectra_scalar_0.txt`; the spectrum-time measurement is written as `average_spectra_times.txt` by the standard text saver. To plot the Fig. 6 left-panel coordinates, use column 1 for `k` and column 2 for the scalar spectrum, divide column 2 by `phi_b^2`, multiply column 1 by `R*`, and draw a vertical marker at `k R* = 2 pi`. The samples at `t/R* = 0`, `0.46875` (nearest to `0.47`), `1`, `4`, and `8` are selected by the preset's `0.88` time cadence.
+
+The accompanying plotting helper applies this conversion and the paper's log-log styling:
+
+```bash
+python3 scripts/plot_vacuum_bubbles.py runs/vacuum-bubbles-row3 \
+  --output runs/vacuum-bubbles-row3/fig6-left.png
+```
+
+For a reduced-resolution smoke run, pass a smaller `--x-max` because its lattice has a lower UV cutoff; the full preset uses the paper-like default `x_max=3e3`.
+
+To exercise all five curves quickly on a `32^3` lattice while keeping the production `R*`, use `N=32 tMax=225.368 tOutputFreq=1000 tOutputInfreq=0.88 tOutputVerb=1000`, then plot with `--x-max 25`.
+
 ## Backend
 
 CosmoLattice uses
